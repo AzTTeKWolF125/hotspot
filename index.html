@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORELINK - PUNTO DE ACCESO</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  
+  <div class="wrapper">
+    <div class="form-wrapper sign-in">
+      <img src="Logo Corelink.png"></img>
+      <form id="registroForm">
+      <form action="">
+        <h2>Conéctate al Internet + Estable</h2>
+        <div class="input-group">
+          <input type="text" id="nombre" name="nombre" required>
+          <label for="">Nombres y Apellidos</label>
+        </div>
+        <div class="input-group">
+          <input type="number" id="telefono" name="telefono"  required>
+          <label for="">Telefono</label>
+        </div>
+        <div class="input-group">
+          <select name="lenguajes" id="sector" name="sector" required>
+            <option value="" disabled selected>Selecciona tu sector</option>
+            <option value="puyo" style="color: black;">Puyo</option>
+            <option value="shell" style="color: black;">Shell</option>
+            <option value="las-americas" style="color: black;">Las Americas</option>
+            <option value="los-angeles" style="color: black;">Los Angeles</option>
+          </select>
+          <label></label>
+        </div>
+        <div class="remember">
+          <label><input type="checkbox" required> Aceptar <a href="Terminos Y condiciones.html">Terminos y Condiciones</a></label>
+        </div>
+        <button type="submit">Aceptar</button>
+        </div>
+      </form>
+    </form>
+    </div>
+  </div>
+  <script src="script.js"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Importa los módulos necesarios de Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+    // Configuración de Firebase (Reemplaza con tu propia configuración)
+    const firebaseConfig = {
+        apiKey: "AIzaSyCoT6O6ID3DFW8EwlQW3fY5537o3sA5Jf4",
+        authDomain: "hostpot-47f72.firebaseapp.com",
+        databaseURL: "https://hostpot-47f72-default-rtdb.firebaseio.com",
+        projectId: "hostpot-47f72",
+        storageBucket: "hostpot-47f72.appspot.com",
+        messagingSenderId: "415351864672",
+        appId: "1:415351864672:web:bf80122f4c18b193bc3205",
+        measurementId: "G-1501XQLZK4"
+    };
+
+    // Inicializa Firebase y la base de datos
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Enviar datos a Firebase
+    document.getElementById("registroForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const nombre = document.getElementById("nombre").value;
+        const sector = document.getElementById("sector").value;
+        const telefono = document.getElementById("telefono").value;
+
+        // Referencia de la base de datos
+        const nuevoRegistroRef = push(ref(database, 'registros'));
+        set(nuevoRegistroRef, {
+            nombre: nombre,
+            sector: sector,
+            telefono: telefono
+        }).then(() => {
+            alert("Datos enviados con éxito.");
+            document.getElementById("registroForm").reset();
+        }).catch((error) => {
+            alert("Error al enviar los datos: " + error.message);
+        });
+    });
+  </script>
+</body>
+</html>
